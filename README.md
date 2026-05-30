@@ -3,7 +3,6 @@
 
 ml-server 실행
 ```
- cd ml-server/
- source .venv/bin/activate
- uvicorn app.main:app --reload --port 8000
+./ml-server/run.sh
 ```
+(처음 실행 시 venv 생성과 의존성 설치를 자동으로 처리합니다. 포트 변경: `PORT=9000 ./ml-server/run.sh`)
