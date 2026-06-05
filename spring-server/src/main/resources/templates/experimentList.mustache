@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>실험 목록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3">
+    <span class="navbar-brand">ML 실험 기록장</span>
+    <a class="btn btn-outline-light btn-sm" href="/experiments/new">+ 새 실험</a>
+</nav>
+
+<div class="container mt-4">
+    <h2 class="mb-3">실험 목록</h2>
+
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>날짜/시간</th>
+            <th>알고리즘</th>
+            <th>정확도</th>
+            <th>손실률</th>
+            <th>메모/태그</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#experiments}}
+        <tr>
+            <td>{{createdAt}}</td>
+            <td>{{algorithm}}</td>
+            <td>{{accuracy}}</td>
+            <td>{{loss}}</td>
+            <td>{{memo}} {{#tag}}<span class="badge bg-secondary">{{tag}}</span>{{/tag}}</td>
+            <td><a class="btn btn-sm btn-outline-primary" href="/experiments/{{id}}">상세</a></td>
+        </tr>
+        {{/experiments}}
+        {{^experiments}}
+        <tr>
+            <td colspan="6" class="text-center text-muted py-4">아직 기록된 실험이 없습니다.</td>
+        </tr>
+        {{/experiments}}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
