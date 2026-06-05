@@ -8,8 +8,6 @@ import com.example.spring_server.repository.ExperimentLogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.List;
-
 @Service
 public class ExperimentService {
 
@@ -52,18 +50,5 @@ public class ExperimentService {
 
         // ④ DB 저장 (저장된 객체엔 id, createdAt 채워져서 돌아옴)
         return repository.save(log);
-    }
-
-    // === 윤서: Read (조회) ===
-
-    // 목록 조회: 삭제 안 된 실험 전체를 최신순으로
-    public List<ExperimentLog> findAll() {
-        return repository.findByDeletedFalseOrderByCreatedAtDesc();
-    }
-
-    // 상세 조회: id로 1건. 없거나 이미 삭제됐으면 예외
-    public ExperimentLog findOne(Long id) {
-        return repository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new IllegalArgumentException("실험을 찾을 수 없습니다. id=" + id));
     }
 }
