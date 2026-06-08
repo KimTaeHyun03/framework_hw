@@ -1,6 +1,8 @@
 package com.example.spring_server.controller;
 
 import com.example.spring_server.dto.CreateExperimentRequest;
+import com.example.spring_server.dto.UpdateExperimentRequest;
+import com.example.spring_server.entity.ExperimentLog;
 import com.example.spring_server.service.ExperimentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,5 +52,22 @@ public class ExperimentViewController {
     public String detail(@PathVariable Long id, Model model) {
         model.addAttribute("experiment", service.findOne(id));
         return "experimentDetail";   // → templates/experimentDetail.mustache
+    }
+
+    // === 기연: Update (수정) ===
+
+    // 수정 폼 — ML 결과는 read-only로 보여주고 memo/tag만 입력받는다
+    @GetMapping("/experiments/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        ExperimentLog experiment = service.findActive(id);
+        model.addAttribute("experiment", experiment);
+        return "experimentEditForm";
+    }
+
+    // 수정 제출 → 단일 조회로 리다이렉트
+    @PostMapping("/experiments/{id}")
+    public String updateSubmit(@PathVariable Long id, @ModelAttribute UpdateExperimentRequest form) {
+        service.update(id, form);
+        return "redirect:/experiments/" + id;
     }
 }

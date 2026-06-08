@@ -3,10 +3,13 @@ package com.example.spring_server.service;
 import com.example.spring_server.dto.CreateExperimentRequest;
 import com.example.spring_server.dto.TrainRequest;
 import com.example.spring_server.dto.TrainResponse;
+import com.example.spring_server.dto.UpdateExperimentRequest;
 import com.example.spring_server.entity.ExperimentLog;
 import com.example.spring_server.repository.ExperimentLogRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -65,5 +68,21 @@ public class ExperimentService {
     public ExperimentLog findOne(Long id) {
         return repository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new IllegalArgumentException("실험을 찾을 수 없습니다. id=" + id));
+    }
+
+    // === 기연: Update (수정) ===
+
+    // soft-delete 된 레코드는 안 보이게. 없거나 삭제됐으면 404.
+    public ExperimentLog findActive(Long id) {
+        return repository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    // memo/tag 만 수정한다. ML 값/하이퍼파라미터/메타 필드는 손대지 않는다.
+    public ExperimentLog update(Long id, UpdateExperimentRequest req) {
+        ExperimentLog log = findActive(id);
+        log.setMemo(req.getMemo());
+        log.setTag(req.getTag());
+        return repository.save(log);
     }
 }
