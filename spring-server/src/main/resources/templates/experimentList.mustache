@@ -33,7 +33,10 @@
             <td>{{accuracy}}</td>
             <td>{{loss}}</td>
             <td>{{memo}} {{#tag}}<span class="badge bg-secondary">{{tag}}</span>{{/tag}}</td>
-            <td><a class="btn btn-sm btn-outline-primary" href="/experiments/{{id}}">상세</a></td>
+            <td>
+                <a class="btn btn-sm btn-outline-primary" href="/experiments/{{id}}">상세</a>
+                <a class="btn btn-sm btn-outline-warning" href="/experiments/{{id}}/edit">수정</a>
+            </td>
         </tr>
         {{/experiments}}
         {{^experiments}}
