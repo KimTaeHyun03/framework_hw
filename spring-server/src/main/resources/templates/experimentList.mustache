@@ -35,6 +35,7 @@
             <td>{{memo}} {{#tag}}<span class="badge bg-secondary">{{tag}}</span>{{/tag}}</td>
             <td>
                 <a class="btn btn-sm btn-outline-primary" href="/experiments/{{id}}">상세</a>
+                <a class="btn btn-sm btn-outline-warning" href="/experiments/{{id}}/edit">수정</a>
                 <form action="/experiments/{{id}}/delete" method="post" class="d-inline" style="margin:0">
                     <button type="submit" class="btn btn-sm btn-outline-danger"
                             onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
