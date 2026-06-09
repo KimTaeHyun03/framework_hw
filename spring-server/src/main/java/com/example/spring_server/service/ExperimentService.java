@@ -8,6 +8,7 @@ import com.example.spring_server.entity.ExperimentLog;
 import com.example.spring_server.repository.ExperimentLogRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -84,5 +85,20 @@ public class ExperimentService {
         log.setMemo(req.getMemo());
         log.setTag(req.getTag());
         return repository.save(log);
+    }
+
+    // === 찬영: Delete (soft delete) ===
+
+    // 물리 삭제가 아니라 deleted 플래그만 true 로 바꾼다.
+    @Transactional  // 메서드가 끝날 때 변경 내용을 DB에 자동 커밋
+    public void softDelete(Long id) {
+        // deleted = false 인 레코드만 가져옴 → 이미 삭제된 것은 예외 발생
+        ExperimentLog log = repository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "존재하지 않거나 이미 삭제된 실험입니다. id=" + id));
+
+        // DB를 직접 UPDATE 하지 않고 객체 필드만 바꿈
+        // → @Transactional 덕분에 JPA가 변경을 감지(Dirty Checking)해서 자동 저장
+        log.setDeleted(true);
     }
 }
