@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.samskivert:jmustache:1.16" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.samskivert" artifactId="jmustache" version="1.16" baseVersion="1.16" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.samskivert/jmustache/1.16/979c7145a406b83bf28da32531f88a34c2d2919c/jmustache-1.16.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

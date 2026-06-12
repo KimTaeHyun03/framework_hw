@@ -5,4 +5,7 @@ ml-server 실행
 ```
 ./ml-server/run.sh
 ```
-(처음 실행 시 venv 생성과 의존성 설치를 자동으로 처리합니다. 포트 변경: `PORT=9000 ./ml-server/run.sh`)
+ ./ml-server/run.sh`)
+
+배포 안해서 터미널에서 ml-server, intellij에서 spring-server 실행하고 
+접속 주소는 [http://localhost:8080/experiments/new](http://localhost:8080/experiments/new)
